@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh pr view:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:patch-diff.githubusercontent.com)",
+      "Bash(curl:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd GGUF metadata extraction support \\(PR #399\\)\n\nThis implements the changes from https://github.com/city96/ComfyUI-GGUF/pull/399\nto add support for loading model configuration directly from GGUF file metadata.\n\nChanges:\n- Added get_gguf_metadata\\(\\) function to extract metadata fields from GGUF files\n- Modified gguf_sd_loader\\(\\) to return \\(state_dict, metadata\\) tuple\n- Updated gguf_sd_loader\\(\\) with return_arch=True to return \\(state_dict, arch, metadata\\)\n- Fixed gguf_clip_loader\\(\\) to handle new return signature\n- Fixed gguf_mmproj_loader\\(\\) to handle new return signature\n- Updated load_unet\\(\\) in nodes.py to pass metadata to load_diffusion_model_state_dict\\(\\)\n\nThis enables proper loading of newer models like LTX2 that store configuration\nin the GGUF file headers rather than as separate files.\n\nCo-Authored-By: Vantage with AI <anshoosr@gmail.com>\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nFix compatibility with ComfyUI-GGUF metadata changes\n\nUpdated GGUFLoader node to handle the new return signature from\nComfyUI-GGUF''s gguf_sd_loader\\(\\) function, which now returns\n\\(state_dict, metadata\\) instead of just state_dict.\n\nThis is required for compatibility with ComfyUI-GGUF PR #399 which\nadds metadata extraction support for models like LTX2.\n\nChanges:\n- Updated model loading to unpack metadata from gguf_sd_loader\\(\\)\n- Updated extra model loading to unpack metadata\n- Merged metadata from extra models into main model metadata\n- Pass metadata to load_diffusion_model_state_dict\\(\\)\n\nFixes AttributeError: ''dict'' object has no attribute ''startswith''\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+    ]
+  }
+}

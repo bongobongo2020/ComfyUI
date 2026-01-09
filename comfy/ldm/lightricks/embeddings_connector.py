@@ -279,7 +279,7 @@ class Embeddings1DConnector(nn.Module):
                 self.learnable_registers.to(hidden_states), (num_registers_duplications, 1)
             )
 
-            hidden_states = torch.cat((hidden_states, learnable_registers[hidden_states.shape[1]:].unsqueeze(0).repeat(hidden_states.shape[0], 1, 1)), dim=1)
+            hidden_states = torch.cat((hidden_states, learnable_registers[hidden_states.shape[1]:].unsqueeze(0).repeat(hidden_states.shape[0], 1, 1).to(hidden_states.device)), dim=1)
 
             if attention_mask is not None:
                 attention_mask = torch.zeros([1, 1, 1, hidden_states.shape[1]], dtype=attention_mask.dtype, device=attention_mask.device)
